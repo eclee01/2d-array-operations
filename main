@@ -1,0 +1,170 @@
+#include <iostream>
+
+const int ROW = 3, COL = 3;
+
+void menu();
+void display(double [][COL]);
+double getTotal(double [][COL]);
+void getAverage(double [][COL]);
+void getRowTotal(double [][COL], int);
+void getColTotal(double [][COL], int);
+void getRowHighest(double [][COL], int);
+void getColHighest(double [][COL], int);
+
+
+int main()
+{
+    int choice = 1, row, col, confirm;
+    double test[ROW][COL];
+    
+    //initialize array data
+    for (int x = 0; x < ROW; x++) {
+        for (int y = 0; y < COL; y++) {
+            std::cout << "Enter a number for Row " << x + 1 << ", ";
+            std::cout << "Col " << y + 1 << ": ";
+            std::cin >> test[x][y];
+        }
+        std::cout << std::endl;
+    }
+    
+    while (choice > 0 && choice <= 8) {
+        display(test);
+        menu();
+        std::cin >> choice;
+        
+        switch (choice) {
+            //total
+            case 1:
+                std::cout << "\nTotal is " << getTotal(test) << ".\n\n";
+                break;
+            //average
+            case 2:
+                getAverage(test);
+                break;
+            //row total
+            case 3:
+                std::cout << "\nEnter which row: ";
+                std::cin >> row;
+                getRowTotal(test, row);
+                break;
+            //col total
+            case 4:
+                std::cout << "\nEnter which col: ";
+                std::cin >> col;
+                getRowTotal(test, col);
+                break;
+            //row highest
+            case 5:
+                std::cout << "\nEnter which row: ";
+                std::cin >> row;
+                row--;
+                getRowHighest(test, row);
+                break;
+            //col highest
+            case 6:
+                std::cout << "\nEnter which col: ";
+                std::cin >> col;
+                col--;
+                getColHighest(test, col);
+                break;
+            //reinput array
+            case 7:
+                while (confirm != 1) {
+                    std::cout << std::endl;
+                    for (int x = 0; x < ROW; x++) {
+                        for (int y = 0; y < COL; y++) {
+                            std::cout << "Enter Row " << x + 1 << ", ";
+                            std::cout << "Col " << y + 1 << ": ";
+                            std::cin >> test[x][y];
+                        }
+                        std::cout << std::endl;
+                    }
+                    
+                    std::cout << "Enter 1 to confirm/Any other # to redo: ";
+                    std::cin >> confirm;
+                }
+                break;
+            //quit
+            case 8:
+                std::cout << "\nThanks for using 2D ARRAY OPERATIONS!\n";
+                return 0;
+        }
+        
+    }
+    
+    return 0;
+}
+
+void menu() {
+    std::cout << "1. Total\n2. Average\n3. Row Total\n";
+    std::cout << "4. Column Total\n5. Row Highest\n";
+    std::cout << "6. Column Highest\n7. New Array\n";
+    std::cout << "8. Quit\n>> ";
+}
+
+void display(double val[][COL]) {
+    std::cout << std::endl;
+    for (int a = 0; a < ROW; a++) {
+        for (int b = 0; b < COL; b++) {
+            std::cout << val[a][b] << " ";
+        }
+        std::cout << "\n";
+    }
+    std::cout << "\n";
+}
+
+double getTotal(double val[][COL]) {
+    double total = 0;
+    for (int i = 0; i < ROW; i++) {
+        for (int j = 0; j < COL; j++) {
+            total += val[i][j];
+        }
+    }
+    return total;
+}
+
+void getAverage(double val[][COL]) {
+    double total = getTotal(val);
+    std::cout << "\nAverage is " << total / (ROW * COL);
+    std::cout << ".\n\n";
+}
+
+void getRowTotal(double val[][COL], int r) {
+    double total = 0;
+    for (int x = 0; x < COL; x++) {
+        total += val[r - 1][x];
+    }
+    std::cout << "\nTotal of Row " << r << " is ";
+    std::cout << total << ".\n";
+}
+
+void getColTotal(double val[][COL], int c) {
+    double total = 0;
+    for (int y = 0; y < ROW; y++) {
+        total += val[y][c - 1];
+    }
+    std::cout << "\nTotal of Column " << c << " is ";
+    std::cout << total << ".\n";
+}
+
+void getRowHighest(double val[][COL], int r) {
+    int max = 0;
+    for (int x = 0; x < COL; x++) {
+        if (val[r][x] > max) {
+            max = val[r][x];
+        }
+    }
+    std::cout << "Highest of Row " << r + 1 << " is ";
+    std::cout << max << ".\n";
+}
+
+void getColHighest(double val[][COL], int c) {
+    int max = 0;
+    for (int i = 0; i < COL; i++) {
+        if (val[i][c] > max) {
+            max = val[i][c];
+        }
+    }
+    std::cout << "Highest of Col " << c + 1 << " is ";
+    std::cout << max << ".\n";
+}
